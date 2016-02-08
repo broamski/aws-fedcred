@@ -92,6 +92,7 @@ def get_arns_from_assertion(assertion):
         arns = role.split(',')
         arn_dict = {}
         for arn in arns:
+            arn = arn.strip()
             if ":role/" in arn:
                 arn_dict['RoleArn'] = arn
             elif ":saml-provider/":
