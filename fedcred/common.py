@@ -100,16 +100,19 @@ def get_arns_from_assertion(assertion):
         arn_dict['SAMLAssertion'] = assertion
         parsed_roles.append(arn_dict)
 
-    print('\nPlease choose a Role you would like to assume:')
-    print('----------------------------------------------\n')
-    for i in range(0, len(parsed_roles)):
-        print('Role [ %s ]: %s' % (i, parsed_roles[i]['RoleArn']))
-    print('\n')
-    role_choice_msg = 'Enter the number of the role you would like to assume: '
-    try:
-        role_choice = raw_input(role_choice_msg).strip()
-    except NameError:
-        role_choice = input(role_choice_msg).strip()
+    if len(parsed_roles) > 1:
+        print('\nPlease choose a Role you would like to assume:')
+        print('----------------------------------------------\n')
+        for i in range(0, len(parsed_roles)):
+            print('Role [ %s ]: %s' % (i, parsed_roles[i]['RoleArn']))
+        print('\n')
+        role_choice_msg = 'Enter the role number you would like to assume: '
+        try:
+            role_choice = raw_input(role_choice_msg).strip()
+        except NameError:
+            role_choice = input(role_choice_msg).strip()
+    else:
+        role_choice = 0
     role_choice = int(role_choice)
     if role_choice > (len(parsed_roles) - 1):
         sys.exit('Sorry, that is not a valid role choice.')
