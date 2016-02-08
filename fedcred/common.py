@@ -116,7 +116,7 @@ def get_arns_from_assertion(assertion):
     role_choice = int(role_choice)
     if role_choice > (len(parsed_roles) - 1):
         sys.exit('Sorry, that is not a valid role choice.')
-    print('Congrats, you will now assume the role of: %s' % (
+    print('Success. You have obtained crentials for the assumed role of: %s' % (
         parsed_roles[role_choice]['RoleArn'],))
     return parsed_roles[role_choice]
 
