@@ -1,5 +1,5 @@
 fedcred: Obtain AWS API Credentials when using Federation/Identity Providers to authenticate to AWS
-=================================================================================================
+===================================================================================================
 
 
 The following identity providers are currently supported:
@@ -7,14 +7,14 @@ The following identity providers are currently supported:
 * Active Directory Federation Services (ADFS)
 * Okta
 
-
 Installation:
 -------------
+
 Option 1
 ~~~~~~~~
 .. code-block:: sh
 
-    $ pip install aws-fedcred
+    $ pip install fedcred
 
 Option 2
 ~~~~~~~~
@@ -34,7 +34,7 @@ The configuation file is named ``fedcred.config`` and should exist in the users 
     
     [fedcred]
     provider = {okta, saml}
-    aws_credential_profile = saml
+    aws_credential_profile = default
     sslverify = True
     
     [okta]
