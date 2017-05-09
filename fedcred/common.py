@@ -55,7 +55,7 @@ def get_user_credentials(prompt=None):
         username = raw_input(prompt_msg).strip()
     except NameError:
         username = input(prompt_msg).strip()
-    password = getpass.getpass(prompt='Enter your passowrd: ')
+    password = getpass.getpass(prompt='Enter your password: ')
     return username, password
 
 
