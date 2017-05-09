@@ -18,12 +18,12 @@ class Adfs(object):
             self.sslverification = self.config.getboolean(
                 common.DEFAULT_CONFIG_SECTION, 'sslverify')
             self.idpurl = self.config.get('adfs', 'url')
+            try:
+                self.ntlmauth = self.config.getboolean('adfs', 'ntlmauth')
+            except ValueError:
+                self.ntlmauth = False
         except (NoOptionError, NoSectionError) as e:
             sys.exit(e.message)
-        try:
-            self.ntlmauth = self.config.getboolean('adfs', 'ntlmauth')
-        except ValueError:
-            self.ntlmauth = False
 
     def auth(self):
         username, password = common.get_user_credentials()
@@ -38,7 +38,7 @@ class Adfs(object):
             else:
                 form_response = session.get(self.idpurl,
                                             verify=self.sslverification)
-                formsoup = BeautifulSoup(form_response.text, "html.parser")
+            formsoup = BeautifulSoup(form_response.text, "html.parser")
             payload_dict = {}
             for inputtag in formsoup.find_all(re.compile('(INPUT|input)')):
                 name = inputtag.get('name', '')
