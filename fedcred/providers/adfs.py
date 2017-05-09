@@ -8,6 +8,7 @@ import sys
 
 from bs4 import BeautifulSoup
 from fedcred import common
+from requests_ntlm import HttpNtlmAuth
 
 
 class Adfs(object):
@@ -17,6 +18,10 @@ class Adfs(object):
             self.sslverification = self.config.getboolean(
                 common.DEFAULT_CONFIG_SECTION, 'sslverify')
             self.idpurl = self.config.get('adfs', 'url')
+            try:
+                self.ntlmauth = self.config.getboolean('adfs', 'ntlmauth')
+            except ValueError:
+                self.ntlmauth = False
         except (NoOptionError, NoSectionError) as e:
             sys.exit(e.message)
 
@@ -24,10 +29,15 @@ class Adfs(object):
         username, password = common.get_user_credentials()
 
         session = requests.Session()
-
         try:
-            form_response = session.get(
-                self.idpurl, verify=self.sslverification)
+            if self.ntlmauth:
+                form_response = session.get(self.idpurl,
+                                            verify=self.sslverification,
+                                            auth=HttpNtlmAuth(username,
+                                                              password))
+            else:
+                form_response = session.get(self.idpurl,
+                                            verify=self.sslverification)
             formsoup = BeautifulSoup(form_response.text, "html.parser")
             payload_dict = {}
             for inputtag in formsoup.find_all(re.compile('(INPUT|input)')):

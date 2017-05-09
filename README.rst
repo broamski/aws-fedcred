@@ -42,6 +42,7 @@ The configuation file is named ``fedcred.config`` and should exist in the users 
     app_url = <okta application url>
     
     [adfs]
+    ntlmauth = {True, False}
     url = https://<adfs fqdn>/adfs/ls/idpinitiatedsignon.aspx?loginToRp=urn:amazon:webservices
 
 
