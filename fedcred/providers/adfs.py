@@ -18,9 +18,12 @@ class Adfs(object):
             self.sslverification = self.config.getboolean(
                 common.DEFAULT_CONFIG_SECTION, 'sslverify')
             self.idpurl = self.config.get('adfs', 'url')
-            self.ntlmauth = self.config.get('adfs', 'ntlmauth')
         except (NoOptionError, NoSectionError) as e:
             sys.exit(e.message)
+        try:
+            self.ntlmauth = self.config.getboolean('adfs', 'ntlmauth')
+        except ValueError:
+            self.ntlmauth = False
 
     def auth(self):
         username, password = common.get_user_credentials()
