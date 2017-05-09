@@ -33,7 +33,7 @@ The configuation file is named ``fedcred.config`` and should exist in the users 
 .. code-block:: ini
     
     [fedcred]
-    provider = {okta, saml}
+    provider = {okta, adfs}
     aws_credential_profile = default
     sslverify = True
     
